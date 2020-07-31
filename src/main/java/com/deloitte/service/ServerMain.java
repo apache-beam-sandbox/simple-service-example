@@ -1,7 +1,5 @@
 package com.deloitte.service;
 
-import java.io.IOException;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -9,10 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.deloitte.service.configuration.ServerConfiguration;
-import com.deloitte.service.grpc.GreetingServiceGrpc;
+import com.deloitte.service.grpc.SimpleGreeterService;
 import com.google.inject.Guice;
-
-import com.deloitte.service.grpc.GreetingServiceGrpc;
 
 import io.grpc.Server;
 import io.grpc.netty.NettyServerBuilder;
@@ -20,9 +16,7 @@ import io.grpc.netty.NettyServerBuilder;
 public class ServerMain {
 
 	private static final Logger logger = LoggerFactory.getLogger(ServerMain.class);
-	private final GreetingService service;
 	private final Integer port;
-
 	private Server server;
 
 	/**
@@ -32,8 +26,7 @@ public class ServerMain {
 	 * @param port    The port to host the service on.
 	 */
 	@Inject
-	public ServerMain(GreetingService service, @Named("ServerPort") Integer port) {
-		this.service = service;
+	public ServerMain(@Named("ServerPort") Integer port) {
 		this.port = port;
 	}
 
@@ -45,7 +38,9 @@ public class ServerMain {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
-		Guice.createInjector(new ServerConfiguration()).getInstance(ServerMain.class).start();
+		Guice.createInjector(new ServerConfiguration())
+		.getInstance(ServerMain.class)
+		.start();
 	}
 
 	/**
@@ -72,11 +67,11 @@ public class ServerMain {
 	/**
 	 * Creates and starts the underlying GRPC server.
 	 *
-	 * @throws IOException
+	 * @throws Exception
 	 */
-	private void startServer() throws IOException {
+	private void startServer() throws Exception {
 		server = NettyServerBuilder.forPort(port)
-			//	.addService(GreetingServiceGrpc.bindService(service))
+				.addService(new SimpleGreeterService())
 				.build().start();
 	}
 

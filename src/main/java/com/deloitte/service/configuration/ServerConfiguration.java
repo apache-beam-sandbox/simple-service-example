@@ -50,9 +50,8 @@ public class ServerConfiguration extends AbstractModule {
 
 			try {
 				inputStream.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (IOException ioex) {
+				logger.error("unable to reead or load application.properties file, this is pretty bad ...");
 			}
 		}
 	}
