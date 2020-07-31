@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.deloitte.service.configuration.ServerConfiguration;
-import com.deloitte.service.grpc.SimpleGreeterService;
+import com.deloitte.service.grpc.SimpleGreeterImpl;
 import com.google.inject.Guice;
 
 import io.grpc.Server;
@@ -71,7 +71,7 @@ public class ServerMain {
 	 */
 	private void startServer() throws Exception {
 		server = NettyServerBuilder.forPort(port)
-				.addService(new SimpleGreeterService())
+				.addService(new SimpleGreeterImpl())
 				.build().start();
 	}
 

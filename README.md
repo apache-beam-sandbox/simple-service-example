@@ -15,11 +15,11 @@ mvn package
 java -jar target/service-example-0.1-shaded.jar
 ```
 
-## Test with BloomRP CGUI
+## Test with BloomRPC GUI
 Download or install bloomrpc
 https://github.com/uw-labs/bloomrpc
 
-For this service, load the Greeter.proto file in 
+For this service, load the Greeter.proto file from 
 the /src/main/proto/ directory
 
 Since the port of the service is configurable, use the localhost:9999 url
